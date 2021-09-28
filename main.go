@@ -3,11 +3,12 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/go-redis/redis/v8"
-	"github.com/gofiber/fiber/v2"
 	"go-short-url/help"
 	"log"
 	"time"
+
+	"github.com/go-redis/redis/v8"
+	"github.com/gofiber/fiber/v2"
 )
 
 var rdb *redis.Client
@@ -34,7 +35,6 @@ func main() {
 
 		val, err := rdb.Get(ctx, key).Result()
 		if err == redis.Nil {
-			fmt.Println("key2 does not exist")
 			c.Status(404)
 			return c.SendString("not found")
 		} else if err != nil {
@@ -72,6 +72,7 @@ func newClient() *redis.Client {
 
 	pong, err := client.Ping(ctx).Result()
 	log.Println(pong)
+
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -90,7 +91,6 @@ func generateUniqCode(url string) string {
 	isPass, _ := result.Result()
 	if !isPass {
 		uniqCode = generateUniqCode(url)
-		fmt.Println(uniqCode)
 	}
 
 	return uniqCode
