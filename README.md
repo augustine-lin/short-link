@@ -1,6 +1,8 @@
 # short-link
 create short link
 
+use fiber, redis
+
 ### setup redis
 
 ```
